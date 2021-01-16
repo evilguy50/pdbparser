@@ -4,7 +4,7 @@ import winim/lean
 export com
 
 from os import splitPath
-{.passC:"-I" & currentSourcePath().splitPath.head .}
+{.passC: "-I" & currentSourcePath().splitPath.head.}
 
 const diaheader = "dia2.h"
 
@@ -63,16 +63,29 @@ type SymTags* {.importcpp: "enum SymTagEnum", header: diaheader.} = enum
   SymTagMax
 
 proc loadDataFromPdb*(src: ptr IDiaDataSource, path: realwstring): HRESULT {.importcpp.}
-proc openSession*(src: ptr IDiaDataSource, sess: ptr ptr IDiaSession): HRESULT {.importcpp.}
+proc openSession*(
+    src: ptr IDiaDataSource,
+    sess: ptr ptr IDiaSession): HRESULT {.importcpp.}
 
-proc get_globalScope*(src: ptr IDiaSession, psym: ptr ptr IDiaSymbol): HRESULT {.importcpp.}
+proc get_globalScope*(
+    src: ptr IDiaSession,
+    psym: ptr ptr IDiaSymbol): HRESULT {.importcpp.}
 
-proc findChildren*(src: ptr IDiaSymbol, tag: SymTags, name: realwstring, flags: DWORD, result: ptr ptr IDiaEnumSymbols): HRESULT {.importcpp.}
+proc findChildren*(
+    src: ptr IDiaSymbol,
+    tag: SymTags,
+    name: realwstring,
+    flags: DWORD,
+    result: ptr ptr IDiaEnumSymbols): HRESULT {.importcpp.}
 proc get_name*(src: ptr IDiaSymbol, pname: ptr sysstring): HRESULT {.importcpp.}
 proc get_undecoratedName*(src: ptr IDiaSymbol, pname: ptr sysstring): HRESULT {.importcpp.}
 proc get_virtualAddress*(src: ptr IDiaSymbol, paddr: ptr culonglong): HRESULT {.importcpp.}
 
-proc Next*(src: ptr IDiaEnumSymbols, celt: culong, psym: ptr ptr IDiaSymbol, pcelt: ptr culong): HRESULT {.importcpp.}
+proc Next*(
+    src: ptr IDiaEnumSymbols,
+    celt: culong,
+    psym: ptr ptr IDiaSymbol,
+    pcelt: ptr culong): HRESULT {.importcpp.}
 
 proc createDataSource*(): ComPtr[IDiaDataSource] =
   createComObject[DiaSource, IDiaDataSource]("msdia140.dll")
@@ -91,7 +104,11 @@ proc global*(src: ptr IDiaSession): ComPtr[IDiaSymbol] =
   checkres "failed to get global":
     src.get_globalScope(+&result)
 
-proc findChildren*(src: ptr IDiaSymbol, tag: SymTags, name: realwstring = nil, flags: DWORD = 0): ComPtr[IDiaEnumSymbols] =
+proc findChildren*(
+    src: ptr IDiaSymbol,
+    tag: SymTags,
+    name: realwstring = nil,
+    flags: DWORD = 0): ComPtr[IDiaEnumSymbols] =
   checkres "failed to find children":
     src.findChildren(tag, name, flags, +&result)
 
