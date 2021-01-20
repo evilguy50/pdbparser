@@ -7,7 +7,7 @@ license       = "LGPL-3.0"
 srcDir        = "src"
 installExt    = @["nim", "h"]
 bin           = @["ezpdbparser"]
-
+backend       = "cpp"
 
 # Dependencies
 
