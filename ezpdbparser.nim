@@ -60,7 +60,7 @@ when isMainModule:
 
   for kind, key, val in p.getopt():
     case kind:
-#    of cmdEnd: assert(false)
+    of cmdEnd: echo "false"
     of cmdArgument:
       if filename.isNone():
         filename = some key
