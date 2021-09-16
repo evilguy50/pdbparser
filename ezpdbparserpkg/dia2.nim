@@ -10,8 +10,8 @@ const diaheader = "dia2.h"
 
 type DiaError* = object of OSError
 
-#type DiaSource* {.importcpp, header: diaheader, nodecl.} = object
-#type IDiaDataSource* {.importcpp, header: diaheader, nodecl.} = object
+type DiaSource* {.importcpp, header: diaheader, nodecl.} = object
+type IDiaDataSource* {.importcpp, header: diaheader, nodecl.} = object
 type IDiaSession* {.importcpp, header: diaheader, nodecl.} = object
 type IDiaSymbol* {.importcpp, header: diaheader, nodecl.} = object
 type IDiaEnumSymbols* {.importcpp, header: diaheader, nodecl.} = object
